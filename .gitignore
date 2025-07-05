@@ -1,0 +1,15 @@
+# clangd
+.cache
+
+# Visual Studio Code
+.vscode
+
+# IntelliJ
+.idea
+
+# artifacts
+build
+cmake-build-*
+
+# System Files
+.DS_Store
