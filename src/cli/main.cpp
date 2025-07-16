@@ -303,12 +303,16 @@ struct CLI_PromptSingleSelect : CLI_PROMPT {
       case Key::ArrowUp:
         if (selectedIndex > 0)
           selectedIndex--;
+        else
+          selectedIndex = static_cast<int>(options.size()) - 1;
         break;
 
       case Key::ArrowRight:
       case Key::ArrowDown:
         if (selectedIndex < static_cast<int>(options.size()) - 1)
           selectedIndex++;
+        else
+          selectedIndex = 0;
         break;
 
       case Key::Enter: {
@@ -448,12 +452,16 @@ struct CLI_PromptMultiSelect : CLI_PROMPT {
       case Key::ArrowUp:
         if (selectedIndex > 0)
           selectedIndex--;
+        else
+          selectedIndex = static_cast<int>(options.size()) - 1;
         break;
 
       case Key::ArrowRight:
       case Key::ArrowDown:
         if (selectedIndex < static_cast<int>(options.size()) - 1)
           selectedIndex++;
+        else
+          selectedIndex = 0;
         break;
 
       case Key::Char:
