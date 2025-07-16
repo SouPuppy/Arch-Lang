@@ -550,11 +550,13 @@ struct CLI_PromptMultiSelect : CLI_PROMPT {
         if (i < options.size())
           std::cout << ANSI_STRIKETHROUGH(ANSI_DIM(options[i].option));
 
+        bool noSelected = (i == options.size());
+
         for (; ++i < options.size();)
           if (selected[i])
             std::cout << ANSI_DIM(", " + ANSI_STRIKETHROUGH(options[i].option));
 
-        std::cout << "\n"
+        std::cout << "\n" << (noSelected ? "": (std::string(UTF_VERTICAL_LINE) + "\n"))
                   << UTF_CORNER_BOTTOM_LEFT
                   << ANSI_RED("  Operation cancelled.") << "\n\n";
         exit(1);
@@ -616,7 +618,7 @@ int main() {
                                Option("OptionB", "This is the 2nd option"),
                                Option("OptionC", "This is the  3rd option")}),
        std::make_shared<CLI_PromptMultiSelect>(
-           "[3] Select your favorite options:",
+           "Select your favorite options:",
            std::vector<Option>{Option("Apples", "Sweet and red."),
                                Option("Bananas", "Good for energy."),
                                Option("Cherries", "Small and juicy.")},
