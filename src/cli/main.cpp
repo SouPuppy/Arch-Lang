@@ -118,6 +118,7 @@ struct CLI_PromptContinue : CLI_PROMPT {
                     << UTF_VERTICAL_LINE << "\n"
                     << UTF_CORNER_BOTTOM_LEFT << ANSI_RED("  Exiting.")
                     << "\n\n";
+          setCursorVisible(true);
           exit(0);
         }
         return choice == Yes;
@@ -143,6 +144,7 @@ struct CLI_PromptContinue : CLI_PROMPT {
                   << ANSI_CANCELLED((choice == Yes ? "Yes" : "No")) << "\n"
                   << UTF_VERTICAL_LINE << "\n"
                   << UTF_CORNER_BOTTOM_LEFT << ANSI_RED("  Exiting.") << "\n\n";
+        setCursorVisible(true);
         exit(1);
       }
     }
@@ -235,7 +237,7 @@ struct CLI_PromptBoolean : CLI_PROMPT {
                   << UTF_VERTICAL_LINE << "\n"
                   << UTF_CORNER_BOTTOM_LEFT
                   << ANSI_RED("  Operation cancelled..") << "\n\n";
-
+        setCursorVisible(true);
         exit(1);
       }
 
@@ -367,6 +369,7 @@ struct CLI_PromptSingleSelect : CLI_PROMPT {
         std::cout << UTF_VERTICAL_LINE << "\n"
                   << UTF_CORNER_BOTTOM_LEFT
                   << ANSI_RED("  Operation cancelled.") << "\n\n";
+        setCursorVisible(true);
         exit(1);
       }
 
@@ -559,6 +562,7 @@ struct CLI_PromptMultiSelect : CLI_PROMPT {
         std::cout << "\n" << (noSelected ? "": (std::string(UTF_VERTICAL_LINE) + "\n"))
                   << UTF_CORNER_BOTTOM_LEFT
                   << ANSI_RED("  Operation cancelled.") << "\n\n";
+        setCursorVisible(true);
         exit(1);
       }
 
