@@ -87,31 +87,41 @@ inline int getch_raw() {
 }
 #endif
 
-// 通用光标操作
+// === TermCoord helpers ===
+
+inline TermCoord offsetCoord(TermCoord base, int dx, int dy) {
+#ifdef _WIN32
+  return TermCoord{ static_cast<SHORT>(base.X + dx), static_cast<SHORT>(base.Y + dy) };
+#else
+  return TermCoord{ base.X + dx, base.Y + dy };
+#endif
+}
+
+inline TermCoord addX(TermCoord base, int dx) {
+  return offsetCoord(base, dx, 0);
+}
+
+inline TermCoord addY(TermCoord base, int dy) {
+  return offsetCoord(base, 0, dy);
+}
+
+// === 通用光标操作 ===
 inline void clearLineAt(TermCoord pos) {
   moveCursorTo(pos);
   std::cout << "\033[K" << std::flush;
 }
 
 inline void clearBelowLine(TermCoord pos, int count) {
-  for (int i = 0; i < count; ++i) {
-    TermCoord line = pos;
-    line.Y += i;
-    moveCursorTo(line);
-    std::cout << "\033[K" << std::flush;
-  }
+  for (int i = 0; i < count; ++i)
+    clearLineAt(addY(pos, i));
 }
 
 inline void clearAboveLine(TermCoord pos, int count) {
-  for (int i = 1; i <= count; ++i) {
-    TermCoord line = pos;
-    line.Y -= i;
-    moveCursorTo(line);
-    std::cout << "\033[K" << std::flush;
-  }
+  for (int i = 1; i <= count; ++i)
+    clearLineAt(addY(pos, -i));
 }
 
-// 键盘按键枚举
+// === 键盘事件与解析 ===
 enum class Key {
   Unknown = -1,
   Char,
@@ -127,17 +137,15 @@ enum class Key {
 
 struct KeyEvent {
   Key key;
-  char ch; // 仅在 Key::Char 有效
+  char ch; // 仅当 key == Char 时有效
 };
 
-// 封装统一按键读取
 inline KeyEvent get_key_event() {
   int ch1 = getch_raw();
-  
+
 #ifdef _WIN32
-  if (ch1 == 3) {
-    return {Key::CtrlC, 0};  // Ctrl-C
-  } else if (ch1 == 0 || ch1 == 224) {
+  if (ch1 == 3) return {Key::CtrlC, 0};
+  if (ch1 == 0 || ch1 == 224) {
     int ch2 = getch_raw();
     switch (ch2) {
       case 72: return {Key::ArrowUp, 0};
@@ -146,19 +154,13 @@ inline KeyEvent get_key_event() {
       case 77: return {Key::ArrowRight, 0};
       default: return {Key::Unknown, 0};
     }
-  } else if (ch1 == 13) {
-    return {Key::Enter, 0};
-  } else if (ch1 == 8) {
-    return {Key::Backspace, 0};
-  } else if (ch1 == 27) {
-    return {Key::Escape, 0};
-  } else {
-    return {Key::Char, static_cast<char>(ch1)};
-  }
+  } else if (ch1 == 13) return {Key::Enter, 0};
+  else if (ch1 == 8) return {Key::Backspace, 0};
+  else if (ch1 == 27) return {Key::Escape, 0};
+  else return {Key::Char, static_cast<char>(ch1)};
 #else
-  if (ch1 == 3) {
-    return {Key::CtrlC, 0};  // Ctrl-C
-  } else if (ch1 == 27) {
+  if (ch1 == 3) return {Key::CtrlC, 0};
+  if (ch1 == 27) {
     char seq1 = getchar();
     if (seq1 == '[') {
       char seq2 = getchar();
@@ -171,12 +173,8 @@ inline KeyEvent get_key_event() {
       }
     }
     return {Key::Escape, 0};
-  } else if (ch1 == 10 || ch1 == 13) {
-    return {Key::Enter, 0};
-  } else if (ch1 == 127) {
-    return {Key::Backspace, 0};
-  } else {
-    return {Key::Char, static_cast<char>(ch1)};
-  }
+  } else if (ch1 == 10 || ch1 == 13) return {Key::Enter, 0};
+  else if (ch1 == 127) return {Key::Backspace, 0};
+  else return {Key::Char, static_cast<char>(ch1)};
 #endif
 }

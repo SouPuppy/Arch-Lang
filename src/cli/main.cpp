@@ -151,6 +151,117 @@ struct CLI_PromptContinue : CLI_PROMPT {
   }
 };
 
+struct CLI_PromptInput : CLI_PROMPT {
+  std::string label;
+  std::string input;
+  std::string fallback;
+  bool warn_need_input = false;
+
+  CLI_PromptInput(std::string text, std::string fallback="") : label(std::move(text)), fallback(fallback){}
+
+  void prompt(TermCoord pos) const override {
+    moveCursorTo(pos);
+    std::string display = input;
+    if (display.empty() && !fallback.empty()) {
+      // 第一个字符反转模拟光标，其余字符淡化显示
+      std::string head = std::string("\033[7m") + fallback[0] + "\033[0m";
+      std::string tail = fallback.substr(1);
+      display = head + ANSI_DIM(tail);
+    }
+    else
+      display += "\033[7m \033[0m"; // Psuedo-cursor effect
+    std::cout << (warn_need_input ? ANSI_YELLOW(UTF_VERTICAL_LINE) : ANSI_BLUE(UTF_VERTICAL_LINE)) << "  " << display << "\033[K";
+
+
+    TermCoord top = pos;
+    top.Y -= 1;
+    moveCursorTo(top);
+    std::cout << (warn_need_input ? ANSI_YELLOW(UTF_TRIANGLE_UP)
+                                    : ICON_PROMPT(state))
+              << "  " << label << "\033[K";
+
+    moveCursorTo(addY(pos, 1));
+    if (warn_need_input) {
+      std::cout << ANSI_YELLOW(UTF_CORNER_BOTTOM_LEFT)
+                << ANSI_YELLOW("  Value cannot be empty.") << "\033[K";
+    } else {
+      std::cout << ANSI_BLUE(UTF_CORNER_BOTTOM_LEFT) << "\033[K";
+    }
+    std::cout.flush();
+  }
+
+  bool run(bool isLastPrompt) override {
+    std::cout << ICON_PROMPT(state) << "  " << label << "\n";
+    std::cout << UTF_VERTICAL_LINE << "\n";
+
+    TermCoord inputLine = addY(getCursorPosition(), -1);  // 输入行位置
+
+    while (true) {
+      prompt(inputLine);  // 显示模拟光标
+      warn_need_input = false;
+      KeyEvent evt = get_key_event();
+
+      switch (evt.key) {
+        case Key::Char:
+          if (evt.ch >= 32 && evt.ch <= 126)
+            input.push_back(evt.ch);
+          break;
+
+        case Key::Backspace:
+          if (!input.empty())
+            input.pop_back();
+          break;
+
+        case Key::Enter: {
+          if (input.empty()) {
+            if (fallback.empty()) {
+              warn_need_input = true;
+              break;
+            }
+            input = fallback;
+          }
+          state = PromptState::Successed;
+
+          clearLineAt(inputLine);
+          clearLineAt(addY(inputLine, 1));
+
+          moveCursorTo(addY(inputLine, -1));
+          std::cout << ICON_PROMPT(state) << "  " << label << "\033[K";
+
+          std::cout << "\n" << UTF_VERTICAL_LINE << "  " << ANSI_DIM(input)
+                    << "\n" << UTF_VERTICAL_LINE << "\n";
+          return true;
+        }
+
+        case Key::Escape:
+        case Key::CtrlC: {
+          state = PromptState::Failed;
+
+          clearLineAt(inputLine);
+          clearLineAt(addY(inputLine, 1));
+
+          moveCursorTo(addY(inputLine, -1));
+          std::cout << ICON_PROMPT(state) << "  " << label << "\033[K";
+
+          if (!input.empty())
+            std::cout << "\n" << UTF_VERTICAL_LINE << "  " << ANSI_CANCELLED(input);
+
+          std::cout << "\n" << UTF_VERTICAL_LINE << "\n"
+                    << UTF_CORNER_BOTTOM_LEFT << ANSI_RED("  Operation cancelled.")
+                    << "\n\n";
+          setCursorVisible(true);
+          exit(1);
+        }
+
+        default:
+          break;
+      }
+    }
+  }
+};
+
+
+
 /* Yes/No Continue Prompt */
 struct CLI_PromptBoolean : CLI_PROMPT {
   std::string label;
@@ -430,7 +541,7 @@ struct CLI_PromptMultiSelect : CLI_PROMPT {
     moveCursorTo(bottom);
     if (warn_no_selection)
       std::cout << ANSI_YELLOW(UTF_CORNER_BOTTOM_LEFT)
-                << ANSI_YELLOW(" Please select at least one option.")
+                << ANSI_YELLOW("  Please select at least one option.")
                 << "\033[K";
     else
       std::cout << ANSI_BLUE(UTF_CORNER_BOTTOM_LEFT) << "\033[K";
@@ -614,7 +725,10 @@ struct Interactive_CLI {
 int main() {
   Interactive_CLI cli(
       "Welcome to Arch CLI",
-      {std::make_shared<CLI_PromptContinue>("Do you want to continue?"),
+      {
+       std::make_shared<CLI_PromptInput>("Enter your name:"),
+       std::make_shared<CLI_PromptInput>("Enter your name:", "default"),
+       std::make_shared<CLI_PromptContinue>("Do you want to continue?"),
        std::make_shared<CLI_PromptBoolean>("Yes or No?"),
        std::make_shared<CLI_PromptSingleSelect>(
            "Choose one",
