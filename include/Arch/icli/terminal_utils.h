@@ -2,6 +2,28 @@
 
 #include <iostream>
 
+// ANSI style wrappers for color and effects
+#define ANSI_RESET "\033[0m"
+#define ANSI_GREEN(_str) (std::string("\033[32m") + (_str) + ANSI_RESET)
+#define ANSI_BLUE(_str) (std::string("\033[94m") + (_str) + ANSI_RESET)
+#define ANSI_YELLOW(_str) (std::string("\033[33m") + (_str) + "\033[0m")
+#define ANSI_DIM(_str) (std::string("\033[2m") + (_str) + ANSI_RESET)
+#define ANSI_CANCELLED(_str) (std::string("\033[9m\033[2m") + (_str) + ANSI_RESET)
+#define ANSI_STRIKETHROUGH(_str) (std::string("\033[9m") + (_str) + ANSI_RESET)
+#define ANSI_RED(_str) (std::string("\033[31m") + (_str) + ANSI_RESET)
+
+// UTF-8 symbols for prompt UI
+#define UTF_DIAMOND_EMPTY u8"\u25C7"
+#define UTF_DIAMOND_FILLED u8"\u25C6"
+#define UTF_BOX_EMPTY u8"\u25FB"
+#define UTF_BLOCK_FILLED u8"\u25FC"
+#define UTF_RADIO_EMPTY u8"\u25CB"
+#define UTF_RADIO_FILLED u8"\u25CF"
+#define UTF_CORNER_TOP_LEFT u8"\u250C"
+#define UTF_VERTICAL_LINE u8"\u2502"
+#define UTF_CORNER_BOTTOM_LEFT u8"\u2514"
+#define UTF_TRIANGLE_UP u8"\u25B2"
+
 #ifdef _WIN32
 #include <windows.h>
 #include <conio.h>
