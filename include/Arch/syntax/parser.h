@@ -52,14 +52,17 @@ struct Parser {
     pos++;
   }
 
-  /* expect to have a specific token type, otherwise record an error */
-  [[nodiscard]] std::optional<Token> expect(const TokenKind kind) {
-    if (const auto token = peek(); token.has_value() && token->type == kind) {
-      pos++;
-      return token;
+  std::vector<int> stack;
+  void stash() { stack.push_back(pos); }
+  void revert() {
+    if (!stack.empty()) {
+      pos = stack.back();
+      stack.pop_back();
     }
-    // TODO - Record an error
-    return std::nullopt;
+  }
+
+  [[nodiscard]] Token previous() const {
+    return tokens[pos - 1];
   }
 
   /* peek at the token at the given offset from the current position without consuming it */
@@ -71,11 +74,10 @@ struct Parser {
   [[nodiscard]] int getLine() const { return tokens[pos].span.begin.line; }
 
   /* Recursive Descent Parsing */
-  Result parse();
+  Result parse_all();
 
   /* expect to parse a term that exact stops at the end of the line */
-  std::optional<std::shared_ptr<HoTT::Term>> parse_term();
-  std::optional<std::shared_ptr<HoTT::Term>> parse_type();
+  std::optional<std::shared_ptr<Arch::HoTT::Term>> parse_term();
 };
 
 /* parsing source code */

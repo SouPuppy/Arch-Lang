@@ -24,7 +24,7 @@ struct Span {
   BytePos end;
 
   /* Constructor for a zero-length span at a single position */
-  explicit Span(const BytePos &pos) : begin(pos), end(pos) {}
+  explicit Span(const BytePos &pos) : begin(pos), end(BytePos(pos.line, pos.column + 1)) {}
 
   /* Constructor for a span from begin to end positions */
   explicit Span(const BytePos &begin, const BytePos &end) : begin(begin), end(end) {}

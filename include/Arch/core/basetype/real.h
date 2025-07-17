@@ -1,25 +1,46 @@
 #pragma once
+#include <memory>
 #include <string>
-#include "arch/core/term.h"
-#include "arch/core/value.h"
+#include <iostream>
+#include "arch/core/basetype/baseType.h"
+
 #include "arch/util/string_utils.h"
 
-namespace Arch::HoTT::BaseType {
+namespace Arch::HoTT {
 
-struct RealType final : Term {
 
-  std::string to_string() override { return "ℝ"; }
-};
-
-struct Real final : Term {
+struct RealType final : BaseType {
   double value;
-  explicit Real(const double val): value(val) {};
-  explicit Real(const std::u32string &val): value(Arch::Utils::u32_to_double(val)) {};
-  std::string to_string() override { return std::to_string(value); }
+  explicit RealType(double value): value(value) {}
+  std::string to_string() override {
+    return std::to_string(value) + " ℝ";
+  }
 };
 
-struct RealConstant final : Value {
-  
+struct RealType_add final : Term {
+  std::shared_ptr<RealType> a, b;
+  explicit RealType_add(std::shared_ptr<RealType> a, std::shared_ptr<RealType> b): a(std::move(a)), b(std::move(b)) {}
+
+  std::string to_string() override {
+    return "+ " + a->to_string() + " " + b->to_string();
+  }
+
+  std::optional<std::shared_ptr<Term>> evaluate() override {
+    /* type check */
+    if (!a || !b) return std::nullopt;
+    auto realA = std::dynamic_pointer_cast<RealType>(a);
+    auto realB = std::dynamic_pointer_cast<RealType>(b);
+
+    if (!realA || !realB) {
+      std::cerr << "Usage: + ℝ ℝ" << std::endl;
+      return std::nullopt;
+    }
+
+    /* evaluation */
+    double result = a->value + b->value;
+    return std::make_shared<RealType>(RealType{result});
+  }
 };
+
 
 }

@@ -7,17 +7,32 @@ void TypeContext::append(std::u32string variable, std::shared_ptr<Term> type) {
 }
 
 void TypeContext::append(const TypeContext &other) {
-  for (const auto& scope : other.parameter_space) {
-    for (const auto& [var, type] : scope) {
+  for (const auto& layer : other.parameter_space) {
+    for (const auto& [var, type] : layer) {
       parameter_space.back()[var] = type;
     }
   }
 }
 
 void TypeContext::extend(const TypeContext &other) {
-  for (const auto& scope : other.parameter_space) {
-    parameter_space.push_back(scope);
+  for (const auto& layer : other.parameter_space) {
+    parameter_space.push_back(layer);
   }
+}
+
+void TypeContext::revert() {
+  if (!parameter_space.empty()) {
+    parameter_space.pop_back();
+  }
+}
+
+std::optional<std::shared_ptr<Term>> TypeContext::check(std::u32string variable) const {
+  for (const auto& layer : parameter_space) {
+    if (const auto it = layer.find(variable); it != layer.end()) {
+      return it->second;
+    }
+  }
+  return std::nullopt;
 }
 
 TypeContext merge(const TypeContext *a, const TypeContext *b) {

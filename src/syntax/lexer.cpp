@@ -173,7 +173,7 @@ Token Scanner::nextToken() {
   const BytePos lineinfo_start = getLineInfo();
 
   /* scanner meets end */
-  if (isAtEnd()) return Token(TokenKind::END_OF_FILE, "\\0", Span(getLineInfo()));
+  if (isAtEnd()) return Token(TokenKind::END_OF_FILE, "\\0", Span(lineinfo_start));
 
   /* Meta Instruction */
   if (newLine() == true) {
@@ -186,27 +186,27 @@ Token Scanner::nextToken() {
   /* single utf8 symbol */
   switch (const char32_t c = peek()) {
     /* Keywords */
-    case U'𝒰': advance(); return Token(TokenKind::UNIVERSE              , U"𝒰", Span(lineinfo_start, getLineInfo()));
+    case U'𝒰': advance(); return Token(TokenKind::UNIVERSE              , U"𝒰", Span(lineinfo_start));
 
     /* Symbols */
-    case U':': advance(); return Token(TokenKind::COLON                 , U":", Span(lineinfo_start, getLineInfo()));
-    case U'#': advance(); return Token(TokenKind::HASH                  , U"#", Span(lineinfo_start, getLineInfo()));
-    case U'+': advance(); return Token(TokenKind::PLUS                  , U"+", Span(lineinfo_start, getLineInfo()));
-    case U'-': advance(); return Token(TokenKind::MINUS                 , U"-", Span(lineinfo_start, getLineInfo()));
-    case U'*': advance(); return Token(TokenKind::ASTERISK              , U"*", Span(lineinfo_start, getLineInfo()));
-    case U'×': advance(); return Token(TokenKind::TIMES                 , U"×", Span(lineinfo_start, getLineInfo()));
-    case U'≡': advance(); return Token(TokenKind::EQUIV                 , U"≡", Span(lineinfo_start, getLineInfo()));
-    case U'=': advance(); return Token(TokenKind::EQUAL                 , U"=", Span(lineinfo_start, getLineInfo()));
-    case U'/': advance(); return Token(TokenKind::SLASH                 , U"/", Span(lineinfo_start, getLineInfo()));
-    case U'(': advance(); return Token(TokenKind::LEFT_PAREN            , U"(", Span(lineinfo_start, getLineInfo()));
-    case U')': advance(); return Token(TokenKind::RIGHT_PAREN           , U")", Span(lineinfo_start, getLineInfo()));
-    case U'{': advance(); return Token(TokenKind::LEFT_BRACE            , U"{", Span(lineinfo_start, getLineInfo()));
-    case U'}': advance(); return Token(TokenKind::RIGHT_BRACE           , U"}", Span(lineinfo_start, getLineInfo()));
-    case U'[': advance(); return Token(TokenKind::LEFT_BRACKET          , U"[", Span(lineinfo_start, getLineInfo()));
-    case U']': advance(); return Token(TokenKind::RIGHT_BRACKET         , U"]", Span(lineinfo_start, getLineInfo()));
-    case U'<': advance(); return Token(TokenKind::LESS_THAN             , U"<", Span(lineinfo_start, getLineInfo()));
-    case U'>': advance(); return Token(TokenKind::GREATER_THAN          , U">", Span(lineinfo_start, getLineInfo()));
-    case U'.': advance(); return Token(TokenKind::DOT                   , U".", Span(lineinfo_start, getLineInfo()));
+    case U':': advance(); return Token(TokenKind::COLON                 , U":", Span(lineinfo_start));
+    case U'#': advance(); return Token(TokenKind::HASH                  , U"#", Span(lineinfo_start));
+    case U'+': advance(); return Token(TokenKind::PLUS                  , U"+", Span(lineinfo_start));
+    case U'-': advance(); return Token(TokenKind::MINUS                 , U"-", Span(lineinfo_start));
+    case U'*': advance(); return Token(TokenKind::ASTERISK              , U"*", Span(lineinfo_start));
+    case U'×': advance(); return Token(TokenKind::TIMES                 , U"×", Span(lineinfo_start));
+    case U'≡': advance(); return Token(TokenKind::EQUIV                 , U"≡", Span(lineinfo_start));
+    case U'=': advance(); return Token(TokenKind::EQUAL                 , U"=", Span(lineinfo_start));
+    case U'/': advance(); return Token(TokenKind::SLASH                 , U"/", Span(lineinfo_start));
+    case U'(': advance(); return Token(TokenKind::LEFT_PAREN            , U"(", Span(lineinfo_start));
+    case U')': advance(); return Token(TokenKind::RIGHT_PAREN           , U")", Span(lineinfo_start));
+    case U'{': advance(); return Token(TokenKind::LEFT_BRACE            , U"{", Span(lineinfo_start));
+    case U'}': advance(); return Token(TokenKind::RIGHT_BRACE           , U"}", Span(lineinfo_start));
+    case U'[': advance(); return Token(TokenKind::LEFT_BRACKET          , U"[", Span(lineinfo_start));
+    case U']': advance(); return Token(TokenKind::RIGHT_BRACKET         , U"]", Span(lineinfo_start));
+    case U'<': advance(); return Token(TokenKind::LESS_THAN             , U"<", Span(lineinfo_start));
+    case U'>': advance(); return Token(TokenKind::GREATER_THAN          , U">", Span(lineinfo_start));
+    case U'.': advance(); return Token(TokenKind::DOT                   , U".", Span(lineinfo_start));
 
     default: ;
   }

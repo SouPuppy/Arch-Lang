@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <optional>
 
 #include "arch/core/term.h"
 #include "arch/util/string_utils.h"
@@ -23,7 +24,14 @@ namespace Arch::HoTT {
  * in the type A.
  */
 
+/* Typing Context
+ *
+ * Types and Programming Language pg. 101
+ *
+ */
+
 struct TypeContext {
+  /* <variable, Type> */
   std::vector<std::unordered_map<std::u32string, std::shared_ptr<Term>>> parameter_space{{}};
 
   TypeContext() = default;
@@ -37,6 +45,9 @@ struct TypeContext {
   /* extend current context with another context */
   void extend(const TypeContext &other);
 
+  /* pop the last assumption from the current context */
+  void revert();
+
   /* dump */
   void dump() const {
     std::cout << " --- context ---\n";
@@ -47,6 +58,9 @@ struct TypeContext {
     }
     std::cout << " ---------------\n";
   }
+
+  /* check the type for a variable if exists */
+  std::optional<std::shared_ptr<Term>> check(std::u32string variable) const;
 };
 
 /* return a merged context of two*/
