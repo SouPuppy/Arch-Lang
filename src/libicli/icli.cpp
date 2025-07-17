@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "Arch/icli/terminal_utils.h"
-#include "Arch/icli.h"
+#include "Arch/icli/icli.h"
 
 inline std::string ICON_PROMPT(const PromptState state) {
   if (state == PromptState::Activated)

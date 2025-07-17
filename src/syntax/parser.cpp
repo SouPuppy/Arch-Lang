@@ -1,12 +1,12 @@
-#include "arch/libsyntax/parser.h"
+#include "arch/syntax/parser.h"
 
 #include <memory>
 
-#include "arch/libsyntax/token.h"
-#include "arch/libsyntax/lexer.h"
-#include "arch/libcore/context.h"
-#include "arch/libcore/term.h"
-#include "arch/libcore/basetype/real.h"
+#include "arch/syntax/token.h"
+#include "arch/syntax/lexer.h"
+#include "arch/core/context.h"
+#include "arch/core/term.h"
+#include "arch/core/basetype/real.h"
 
 namespace Arch::Syntax {
 

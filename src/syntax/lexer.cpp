@@ -1,6 +1,6 @@
-#include "arch/libsyntax/parser.h"
-#include "arch/libsyntax/token.h"
-#include "arch/libsyntax/lexer.h"
+#include "arch/syntax/parser.h"
+#include "arch/syntax/token.h"
+#include "arch/syntax/lexer.h"
 #include "arch/util/char_utils.h"
 
 #include <memory>

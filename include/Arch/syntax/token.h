@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include <utility>
-#include "arch/libsyntax/span.h"
+#include "arch/syntax/span.h"
 #include "arch/util/string_utils.h"
 
 namespace Arch::Syntax {

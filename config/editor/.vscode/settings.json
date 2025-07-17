@@ -1,0 +1,18 @@
+{
+  "explorer.sortOrder": "type",
+  "files.exclude": {
+    "build/": false,
+    "cmake-build-*/": true,
+    ".cache/": true,
+    ".idea/": true,
+    ".vscode/": true,
+  },
+  "search.exclude": {
+    "build/": true,
+    "cmake-build-*/": true,
+    ".cache/": false,
+    ".vscode/": true,
+    ".idea/": true,
+    ".git/": true,
+  }
+}

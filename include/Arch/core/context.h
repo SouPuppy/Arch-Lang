@@ -6,7 +6,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "arch/libcore/term.h"
+#include "arch/core/term.h"
 #include "arch/util/string_utils.h"
 
 namespace Arch::HoTT {

@@ -3,6 +3,7 @@
 
 # Visual Studio Code
 .vscode
+!config/editor/.vscode/
 
 # IntelliJ
 .idea

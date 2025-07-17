@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
-#include "arch/libcore/term.h"
-#include "arch/libcore/value.h"
+#include "arch/core/term.h"
+#include "arch/core/value.h"
 #include "arch/util/string_utils.h"
 
 namespace Arch::HoTT::BaseType {

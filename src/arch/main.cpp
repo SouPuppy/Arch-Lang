@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <filesystem>
 
-#include "arch/libsyntax/parser.h"
+#include "arch/syntax/parser.h"
 
 using namespace std;
 

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "arch/libsyntax/token.h"
-#include "arch/libcore/context.h"
-#include "arch/libcore/term.h"
+#include "arch/syntax/token.h"
+#include "arch/core/context.h"
+#include "arch/core/term.h"
 
 #include <memory>
 #include <string>
