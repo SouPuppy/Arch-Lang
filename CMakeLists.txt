@@ -7,7 +7,4 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_subdirectory(./src/cli)
 
-add_executable(example ./main.cpp)
-target_link_libraries(example arch_icli)
-target_include_directories(example
-PRIVATE ${CMAKE_SOURCE_DIR}/include)
+add_subdirectory(./example)
