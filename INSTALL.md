@@ -7,5 +7,30 @@ The Arch build system only uses CMake &mdash; nothing more. Before you begin, ma
 - CMake 3.25
 - c++ std=17 or above
 
-## Building from a Unix-like system
+## Windows
 
+### Install
+
+```
+powershell -ExecutionPolicy Bypass -File .\scripts\install\install.ps1
+```
+
+### Unitstall
+
+```
+powershell -ExecutionPolicy Bypass -File .\scripts\uninstall\uninstall.ps1
+```
+
+## Unix-like system
+
+### Install
+```
+cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$HOME/.arch"
+cmake --build build --config Release
+cmake --install build
+```
+
+### Unitstall
+
+```
+```
