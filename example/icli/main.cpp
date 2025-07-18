@@ -1,6 +1,6 @@
 #include <vector>
 #include <memory>
-#include <Arch/icli/icli.h>
+#include <arch/icli/icli.h>
 
 int main() {
   Interactive_CLI cli(

@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 
-#include "Arch/icli/terminal_utils.h"
-#include "Arch/icli/icli.h"
+#include "arch/icli/terminal_utils.h"
+#include "arch/icli/icli.h"
 
 inline std::string ICON_PROMPT(const PromptState state) {
   if (state == PromptState::Activated)
@@ -604,24 +604,35 @@ void Interactive_CLI::run() {
   setCursorVisible(false);
 
   std::cout << "\n" << UTF_CORNER_TOP_LEFT << "  " << greeting << "\n";
-  std::cout << UTF_VERTICAL_LINE << "\n";
+  std::cout << UTF_VERTICAL_LINE << "\n" << UTF_VERTICAL_LINE << "\n";
 
   for (size_t i = 0; i < prompts.size(); ++i) {
     bool isLast = (i == prompts.size() - 1);
-    bool ok = prompts[i]->run(isLast);
 
     TermCoord up = getCursorPosition();
     up.Y -= 1;
-
     moveCursorTo(up);
+
+    /* if the precondition for this prompt is not satisfied, this prompt will
+     * not show up */
+    if (prompts[i]->precondition && !prompts[i]->precondition()) {
+      goto draw_ending;
+    }
+
+    if (!prompts[i]->run(isLast))
+      break; /* this should not be reached */
+
+    /* execute the postal action */
+    if (prompts[i]->action)
+      prompts[i]->action();
+
+  /* draw the ending */
+  draw_ending:
     if (!isLast && prompts[i]->state == PromptState::Succeed) {
       std::cout << UTF_VERTICAL_LINE << "\n";
     } else {
       std::cout << UTF_CORNER_BOTTOM_LEFT << "\n";
     }
-
-    if (!ok)
-      break;
   }
 
   setCursorVisible(true);

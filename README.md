@@ -21,10 +21,7 @@ Arch explores multiple theories of types and computation. Each theoretical syste
 | Branch            | Description                           | Status       |
 |-------------------|---------------------------------------|--------------|
 | `theory/dev`      | Experimental branch for prototyping   | in progress  |
-| `theory/utlc`     | Untyped Lambda Calculus               | in progress  |
 | `theory/stlc`     | Simple Typed Lambda Calculus          | in progress  |
-| `theory/systemf`  | System F (second-order polymorphic λ) | in progress  |
-| `theory/mltt`     | Martin-Löf Type Theory                | in progress  |
 | `theory/hott`     | Homotopy Type Theory                  | in progress  |
 
 To try out a particular theory, check out the corresponding branch:
@@ -49,11 +46,15 @@ Read the [Installation] section from the [Documentation]
 
 ## Source Code
 
+> Building from source: [Building Arch]
+
 The Arch source code is organized as follows:
 
 | Directory | Contents                      |
 |-----------|-------------------------------|
 | `src/`    | source for Arch language core |
+
+[Building Arch]: https://soupup.online/Installation
 
 ## Contributing
 

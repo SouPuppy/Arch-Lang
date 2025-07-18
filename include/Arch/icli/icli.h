@@ -1,8 +1,9 @@
 #pragma once
 
-#include "Arch/icli/terminal_utils.h"
+#include "arch/icli/terminal_utils.h"
 #include <memory>
 #include <vector>
+#include <functional>
 
 enum PromptState { Activated, Succeed, Failed, Invisible };
 enum BooleanChoice { Yes, No };
@@ -14,24 +15,48 @@ struct Option {
 
 /* Abstract Prompt */
 struct CLI_PROMPT {
+  std::function<bool()> precondition = [] { return true; };
+  std::function<void()> action = [] {};
   PromptState state = PromptState::Activated;
   virtual void prompt(TermCoord pos) const = 0;
   virtual bool run(bool isLastPrompt) = 0;
   virtual ~CLI_PROMPT() = default;
 };
 
+/* Execute a command */
+struct CLI_Execute : CLI_PROMPT {
+  explicit CLI_Execute(
+    std::function<bool()> precond = [] { return true; },
+    std::function<void()> act = [] {}
+  ) {
+    /* this is a special prompt that will never be shown (only executable) */
+    state = Invisible;
+    precondition = std::move(precond);
+    action = std::move(act);
+  }
+  void prompt(TermCoord pos) const override {};
+  bool run(bool isLastPrompt) override { return true; };
+};
+
 /* Yes/No Continue Prompt */
-struct CLI_PromptContinue final : CLI_PROMPT {
+struct CLI_PromptContinue : CLI_PROMPT {
   std::string label;
   BooleanChoice choice = Yes;
 
-  explicit CLI_PromptContinue(std::string text) : label(std::move(text)) {}
+  explicit CLI_PromptContinue(
+    std::string text,
+    std::function<bool()> precond = [] { return true; },
+    std::function<void()> act = [] {}
+  ) : label(std::move(text)) {
+    precondition = std::move(precond);
+    action = std::move(act);
+  }
+
   void prompt(TermCoord pos) const override;
   bool run(bool isLastPrompt) override;
 };
 
-
-struct CLI_PromptInput final : CLI_PROMPT {
+struct CLI_PromptInput : CLI_PROMPT {
   std::string label;
   std::string input;
   std::string fallback;
@@ -56,7 +81,7 @@ struct CLI_PromptBoolean : CLI_PROMPT {
   bool run(bool isLastPrompt) override;
 };
 
-struct CLI_PromptSingleSelect final : CLI_PROMPT {
+struct CLI_PromptSingleSelect : CLI_PROMPT {
   std::string label;
   std::vector<Option> options;
   int selectedIndex = 0;
