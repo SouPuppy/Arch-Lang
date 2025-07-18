@@ -603,7 +603,7 @@ bool CLI_PromptMultiSelect::run(bool isLastPrompt) {
 void Interactive_CLI::run() {
   setCursorVisible(false);
 
-  std::cout << "\n" << UTF_CORNER_TOP_LEFT << "  " << greeting << "\n";
+  std::cout << UTF_CORNER_TOP_LEFT << "  " << greeting << "\n";
   std::cout << UTF_VERTICAL_LINE << "\n" << UTF_VERTICAL_LINE << "\n";
 
   for (size_t i = 0; i < prompts.size(); ++i) {

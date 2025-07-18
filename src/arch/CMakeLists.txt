@@ -13,3 +13,8 @@ target_include_directories(arch
 	PRIVATE ${CMAKE_BINARY_DIR}/include
   PRIVATE ${CMAKE_SOURCE_DIR}/include
 )
+
+# installation
+install(TARGETS arch
+	RUNTIME DESTINATION bin
+)
