@@ -7,9 +7,10 @@ inline bool check_project_exists(const std::string& path) {
   return std::filesystem::exists(path + "/.arch");
 }
 
-inline void project_initialize(const std::string& path) {
-  const auto arch_dir = path + "/.arch";
-  std::filesystem::create_directory(arch_dir);
+inline void project_initialize(const std::filesystem::path& dot_arch_path) {
+  std::filesystem::create_directory(dot_arch_path);
+  
+  std::filesystem::create_directory(dot_arch_path / "modules");
 }
 
 inline void cmd_init_project(int argc, const char *argv[]) {
@@ -31,7 +32,7 @@ inline void cmd_init_project(int argc, const char *argv[]) {
     ),
     std::make_shared<CLI_Execute>(
       [=]() { return true; },
-      [=]() { project_initialize(project_path); }
+      [=]() { project_initialize(dot_arch_path); }
     )
   });
 

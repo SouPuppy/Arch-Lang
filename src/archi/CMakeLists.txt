@@ -7,3 +7,7 @@ target_link_libraries(archi
 	  arch_libcore
 	  arch_libsyntax
 )
+
+install(TARGETS archi
+    RUNTIME DESTINATION core/archi/${ARCH_VERSION}
+)

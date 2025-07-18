@@ -15,7 +15,7 @@ add_subdirectory(./src/core)
 add_subdirectory(./src/syntax)
 add_subdirectory(./src/libicli)
 
-add_subdirectory(./src/arch)
+add_subdirectory(./src/arch)	# arch toolchain
 add_subdirectory(./src/archi) # arch cli
 
 add_subdirectory(./example)
@@ -39,9 +39,4 @@ configure_file(
 	${CMAKE_SOURCE_DIR}/config/version.h.in
 	${CMAKE_BINARY_DIR}/include/arch/version.h
 	@ONLY
-)
-
-# installation
-install(TARGETS arch
-	RUNTIME DESTINATION bin
 )

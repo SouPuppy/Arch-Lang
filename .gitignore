@@ -1,3 +1,6 @@
+# arch
+.arch
+
 # clangd
 .cache
 

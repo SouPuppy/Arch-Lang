@@ -25,7 +25,7 @@ int main(int argc, const char * argv[]) {
     if (!argv[0]) argv[0] = "--help";
 
     /* [-v | --version] */
-    printf("arch %s (%s %s)\n", ARCH_VERSION_COMPLETE, ARCH_COMMIT_HASH, ARCH_COMMIT_DATE);
+    printf("arch %s (%s %s)\n\n", ARCH_VERSION_COMPLETE, ARCH_COMMIT_HASH, ARCH_COMMIT_DATE);
     if (!strcmp("--version", argv[0]) || !strcmp("-v", argv[0])) {
         exit(0);
     }
@@ -49,5 +49,7 @@ int main(int argc, const char * argv[]) {
         return 0;
     }
 
-    return 0;
+    printf("Unknown Command: %s\n\n", argv[0]);
+    
+    return 1;
 }
