@@ -49,6 +49,11 @@ int main(int argc, const char * argv[]) {
         return 0;
     }
 
+    if (!strcmp(argv[0], "list")) {
+        // cmd_list_projects(argc - 1, argv + 1);
+        return 0;
+    }
+
     printf("Unknown Command: %s\n\n", argv[0]);
     
     return 1;

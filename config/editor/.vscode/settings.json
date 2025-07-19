@@ -14,5 +14,7 @@
     ".vscode/": true,
     ".idea/": true,
     ".git/": true,
-  }
+  },
+  // CMake
+  "cmake.useCMakePresets": "always"
 }

@@ -9,5 +9,5 @@ target_link_libraries(archi
 )
 
 install(TARGETS archi
-    RUNTIME DESTINATION core/archi/${ARCH_VERSION}
+    RUNTIME DESTINATION bin
 )

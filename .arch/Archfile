@@ -1,0 +1,7 @@
+using @std
+
+export project: ARCH_PROJECT := {
+  name        := "arch"
+  version     := toolchain.version
+  description := "The Arch Project."
+}

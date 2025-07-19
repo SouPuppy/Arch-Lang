@@ -6,6 +6,7 @@ project(arch-lang)
 set(ARCH_VERSION_MAJOR 0)
 set(ARCH_VERSION_MINOR 1)
 set(ARCH_VERSION_PATCH 0)
+set(ARCH_VERSION "${ARCH_VERSION_MAJOR}.${ARCH_VERSION_MINOR}.${ARCH_VERSION_PATCH}")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -39,4 +40,10 @@ configure_file(
 	${CMAKE_SOURCE_DIR}/config/version.h.in
 	${CMAKE_BINARY_DIR}/include/arch/version.h
 	@ONLY
+)
+
+# installation
+install(
+  DIRECTORY ${CMAKE_SOURCE_DIR}/modules
+  DESTINATION .
 )

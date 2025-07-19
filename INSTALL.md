@@ -4,8 +4,10 @@ The Arch build system only uses CMake &mdash; nothing more. Before you begin, ma
 
 ## Dependencies
 
-- CMake 3.25
+- [CMake] 3.25
 - c++ std=17 or above
+
+[CMake]: https://cmake.org/
 
 ## Windows
 
