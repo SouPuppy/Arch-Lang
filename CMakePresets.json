@@ -9,11 +9,14 @@
     {
       "name": "dev",
       "displayName": "Development Build",
+      "generator": "Ninja",
       "description": "Build with debug info and install to ./arch",
       "binaryDir": "${sourceDir}/build",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_INSTALL_PREFIX": "${sourceDir}/.arch"
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/.arch",
+        "CMAKE_C_COMPILER": "clang",
+        "CMAKE_CXX_COMPILER": "clang++"
       }
     }
   ]

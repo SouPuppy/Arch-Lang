@@ -181,39 +181,49 @@ Token Scanner::nextToken() {
     if (match(U"#type")) return Token(TokenKind::INSTR_TYPE              , U"#type", Span(lineinfo_start, getLineInfo()));
     if (match(U"#info")) return Token(TokenKind::INSTR_INFO              , U"#info", Span(lineinfo_start, getLineInfo()));
     if (match(U"#eval")) return Token(TokenKind::INSTR_EVAL              , U"#eval", Span(lineinfo_start, getLineInfo()));
-  }
+  }  
 
+  /* match keywords */
+  if (match(U"ℝ"))          return Token(TokenKind::KEYWORD_REAL        , U"ℝ", Span(lineinfo_start, getLineInfo()));
+  if (match(U"def"))        return Token(TokenKind::KEYWORD_DEF         , U"def", Span(lineinfo_start, getLineInfo()));
+  if (match(U"using"))      return Token(TokenKind::KEYWORD_USING       , U"using", Span(lineinfo_start, getLineInfo()));
+  if (match(U"import"))     return Token(TokenKind::KEYWORD_IMPORT      , U"import", Span(lineinfo_start, getLineInfo()));
+  if (match(U"namespace"))  return Token(TokenKind::KEYWORD_NAMESPACE   , U"namespace", Span(lineinfo_start, getLineInfo()));
+  if (match(U"export"))     return Token(TokenKind::KEYWORD_EXPORT      , U"export", Span(lineinfo_start, getLineInfo()));
+  if (match(U"(+)"))        return Token(TokenKind::KEYWORD_PLUS_TERM   , U"(+)", Span(lineinfo_start, getLineInfo()));
+  if (match(U"(×)"))        return Token(TokenKind::KEYWORD_TIMES_TERM  , U"(×)", Span(lineinfo_start, getLineInfo()));
+  
   /* single utf8 symbol */
   switch (const char32_t c = peek()) {
     /* Keywords */
     case U'𝒰': advance(); return Token(TokenKind::UNIVERSE              , U"𝒰", Span(lineinfo_start));
 
     /* Symbols */
-    case U':': advance(); return Token(TokenKind::COLON                 , U":", Span(lineinfo_start));
-    case U'#': advance(); return Token(TokenKind::HASH                  , U"#", Span(lineinfo_start));
-    case U'+': advance(); return Token(TokenKind::PLUS                  , U"+", Span(lineinfo_start));
-    case U'-': advance(); return Token(TokenKind::MINUS                 , U"-", Span(lineinfo_start));
-    case U'*': advance(); return Token(TokenKind::ASTERISK              , U"*", Span(lineinfo_start));
-    case U'×': advance(); return Token(TokenKind::TIMES                 , U"×", Span(lineinfo_start));
-    case U'≡': advance(); return Token(TokenKind::EQUIV                 , U"≡", Span(lineinfo_start));
-    case U'=': advance(); return Token(TokenKind::EQUAL                 , U"=", Span(lineinfo_start));
-    case U'/': advance(); return Token(TokenKind::SLASH                 , U"/", Span(lineinfo_start));
-    case U'(': advance(); return Token(TokenKind::LEFT_PAREN            , U"(", Span(lineinfo_start));
-    case U')': advance(); return Token(TokenKind::RIGHT_PAREN           , U")", Span(lineinfo_start));
-    case U'{': advance(); return Token(TokenKind::LEFT_BRACE            , U"{", Span(lineinfo_start));
-    case U'}': advance(); return Token(TokenKind::RIGHT_BRACE           , U"}", Span(lineinfo_start));
-    case U'[': advance(); return Token(TokenKind::LEFT_BRACKET          , U"[", Span(lineinfo_start));
-    case U']': advance(); return Token(TokenKind::RIGHT_BRACKET         , U"]", Span(lineinfo_start));
-    case U'<': advance(); return Token(TokenKind::LESS_THAN             , U"<", Span(lineinfo_start));
-    case U'>': advance(); return Token(TokenKind::GREATER_THAN          , U">", Span(lineinfo_start));
-    case U'.': advance(); return Token(TokenKind::DOT                   , U".", Span(lineinfo_start));
+    case U':':  advance(); return Token(TokenKind::COLON                 , U":",  Span(lineinfo_start));
+    case U'#':  advance(); return Token(TokenKind::HASH                  , U"#",  Span(lineinfo_start));
+    case U'+':  advance(); return Token(TokenKind::PLUS                  , U"+",  Span(lineinfo_start));
+    case U'-':  advance(); return Token(TokenKind::MINUS                 , U"-",  Span(lineinfo_start));
+    case U'*':  advance(); return Token(TokenKind::ASTERISK              , U"*",  Span(lineinfo_start));
+    case U'×':  advance(); return Token(TokenKind::TIMES                 , U"×",  Span(lineinfo_start));
+    case U'≡':  advance(); return Token(TokenKind::EQUIV                 , U"≡",  Span(lineinfo_start));
+    case U'=':  advance(); return Token(TokenKind::EQUAL                 , U"=",  Span(lineinfo_start));
+    case U'/':  advance(); return Token(TokenKind::SLASH                 , U"/",  Span(lineinfo_start));
+    case U'(':  advance(); return Token(TokenKind::LEFT_PAREN            , U"(",  Span(lineinfo_start));
+    case U')':  advance(); return Token(TokenKind::RIGHT_PAREN           , U")",  Span(lineinfo_start));
+    case U'{':  advance(); return Token(TokenKind::LEFT_BRACE            , U"{",  Span(lineinfo_start));
+    case U'}':  advance(); return Token(TokenKind::RIGHT_BRACE           , U"}",  Span(lineinfo_start));
+    case U'[':  advance(); return Token(TokenKind::LEFT_BRACKET          , U"[",  Span(lineinfo_start));
+    case U']':  advance(); return Token(TokenKind::RIGHT_BRACKET         , U"]",  Span(lineinfo_start));
+    case U'<':  advance(); return Token(TokenKind::LESS_THAN             , U"<",  Span(lineinfo_start));
+    case U'>':  advance(); return Token(TokenKind::GREATER_THAN          , U">",  Span(lineinfo_start));
+    case U'.':  advance(); return Token(TokenKind::DOT                   , U".",  Span(lineinfo_start));
+    case U'\"': advance(); return Token(TokenKind::DOUBLE_QUOTE          , U"\"", Span(lineinfo_start));
+    case U'@':  advance(); return Token(TokenKind::AT                    , U"@",  Span(lineinfo_start));
+    case U'_':  advance(); return Token(TokenKind::UNDERSCORE            , U"_",  Span(lineinfo_start));
+    case U'|':  advance(); return Token(TokenKind::BAR                   , U"|",  Span(lineinfo_start));
 
     default: ;
   }
-
-  /* match keywords */
-  if (match(U"ℝ"))    return Token(TokenKind::KEYWORD_REAL          , U"ℝ", Span(lineinfo_start, getLineInfo()));
-  if (match(U"def"))  return Token(TokenKind::KEYWORD_DEF           , U"def", Span(lineinfo_start, getLineInfo()));
 
   /* match with DFAs (Deterministic Finite Automaton) */
   if (auto result = MatchList().match(*this); result.has_value()) {

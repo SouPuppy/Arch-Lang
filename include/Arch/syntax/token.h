@@ -30,6 +30,13 @@ enum class TokenKind: uint8_t {
   TYPE,               // Type
   UNIVERSE,           // 𝒰
   KEYWORD_DEF,        // def
+  KEYWORD_USING,      // using
+  KEYWORD_IMPORT,     // import
+  KEYWORD_NAMESPACE,  // namesapce
+  KEYWORD_EXPORT,     // export
+
+  KEYWORD_PLUS_TERM,  // (+)
+  KEYWORD_TIMES_TERM, // (×)
 
   /* Symbols */
   COLON,              // :
@@ -50,6 +57,10 @@ enum class TokenKind: uint8_t {
   LESS_THAN,          // <
   GREATER_THAN,       // >
   DOT,                // .
+  DOUBLE_QUOTE,       // "
+  AT,                 // @
+  UNDERSCORE,         // _
+  BAR,                // |
 
   /* Meta */
   END_OF_FILE,        // EOF
@@ -59,46 +70,58 @@ enum class TokenKind: uint8_t {
 inline std::string to_string(const TokenKind kind) {
   switch (kind) {
     /* Base Types */
-    case TokenKind::KEYWORD_REAL:     return "KEYWORD_REAL";
+    case TokenKind::KEYWORD_REAL:       return "KEYWORD_REAL";
 
     /* Numbers */
-    case TokenKind::INTEGER:          return "INTEGER";
-    case TokenKind::REAL:             return "REAL";
+    case TokenKind::INTEGER:            return "INTEGER";
+    case TokenKind::REAL:               return "REAL";
 
     /* Meta Instructions */
-    case TokenKind::INSTR_TYPE:       return "INSTR_TYPE";
-    case TokenKind::INSTR_INFO:       return "INSTR_INFO";
-    case TokenKind::INSTR_EVAL:       return "INSTR_EVAL";
+    case TokenKind::INSTR_TYPE:         return "INSTR_TYPE";
+    case TokenKind::INSTR_INFO:         return "INSTR_INFO";
+    case TokenKind::INSTR_EVAL:         return "INSTR_EVAL";
 
     /* Keywords */
-    case TokenKind::IDENTIFIER:       return "IDENTIFIER";
-    case TokenKind::TYPE:             return "TYPE";
-    case TokenKind::UNIVERSE:         return "UNIVERSE";
-    case TokenKind::KEYWORD_DEF:      return "KEYWORD_DEF";
+    case TokenKind::IDENTIFIER:         return "IDENTIFIER";
+    case TokenKind::TYPE:               return "TYPE";
+    case TokenKind::UNIVERSE:           return "UNIVERSE";
+    case TokenKind::KEYWORD_DEF:        return "KEYWORD_DEF";
+    case TokenKind::KEYWORD_USING:      return "KEYWORD_UISNG";
+    case TokenKind::KEYWORD_IMPORT:     return "KEYWORD_IMPORT"  ;
+    case TokenKind::KEYWORD_NAMESPACE:  return "KEYWORD_NAMESPACE";
+    case TokenKind::KEYWORD_EXPORT:     return "KEYWORD_EXPORT";
+
+    case TokenKind::KEYWORD_PLUS_TERM:  return "KEYWORD_PLUS_TERM";
+    case TokenKind::KEYWORD_TIMES_TERM: return "KEYWORD_TIMES_TERM";
 
     /* Symbols */
-    case TokenKind::COLON:            return "COLON";
-    case TokenKind::HASH:             return "HASH";
-    case TokenKind::PLUS:             return "PLUS";
-    case TokenKind::MINUS:            return "MINUS";
-    case TokenKind::ASTERISK:         return "ASTERISK";
-    case TokenKind::TIMES:            return "TIMES";
-    case TokenKind::EQUIV:            return "EQUIV";
-    case TokenKind::EQUAL:            return "EQUAL";
-    case TokenKind::SLASH:            return "SLASH";
-    case TokenKind::LEFT_PAREN:       return "LEFT_PAREN";
-    case TokenKind::RIGHT_PAREN:      return "RIGHT_PAREN";
-    case TokenKind::LEFT_BRACE:       return "LEFT_BRACE";
-    case TokenKind::RIGHT_BRACE:      return "RIGHT_BRACE";
-    case TokenKind::LEFT_BRACKET:     return "LEFT_BRACKET";
-    case TokenKind::RIGHT_BRACKET:    return "RIGHT_BRACKET";
-    case TokenKind::LESS_THAN:        return "LESS_THAN";
-    case TokenKind::GREATER_THAN:     return "GREATER_THAN";
-    case TokenKind::DOT:              return "DOT";
+    case TokenKind::COLON:              return "COLON";
+    case TokenKind::HASH:               return "HASH";
+    case TokenKind::PLUS:               return "PLUS";
+    case TokenKind::MINUS:              return "MINUS";
+    case TokenKind::ASTERISK:           return "ASTERISK";
+    case TokenKind::TIMES:              return "TIMES";
+    case TokenKind::EQUIV:              return "EQUIV";
+    case TokenKind::EQUAL:              return "EQUAL";
+    case TokenKind::SLASH:              return "SLASH";
+    case TokenKind::LEFT_PAREN:         return "LEFT_PAREN";
+    case TokenKind::RIGHT_PAREN:        return "RIGHT_PAREN";
+    case TokenKind::LEFT_BRACE:         return "LEFT_BRACE";
+    case TokenKind::RIGHT_BRACE:        return "RIGHT_BRACE";
+    case TokenKind::LEFT_BRACKET:       return "LEFT_BRACKET";
+    case TokenKind::RIGHT_BRACKET:      return "RIGHT_BRACKET";
+    case TokenKind::LESS_THAN:          return "LESS_THAN";
+    case TokenKind::GREATER_THAN:       return "GREATER_THAN";
+    case TokenKind::DOT:                return "DOT";
+
+    case TokenKind::DOUBLE_QUOTE:       return "DOUBLE_QUOTE";
+    case TokenKind::AT:                 return "AT";
+    case TokenKind::UNDERSCORE:         return "UNDERSCORE";
+    case TokenKind::BAR:                return "BAR";
 
     /* Meta */
-    case TokenKind::END_OF_FILE:      return "END_OF_FILE";
-    default:                          return "UNKNOWN";
+    case TokenKind::END_OF_FILE:        return "END_OF_FILE";
+    default:                            return "UNKNOWN";
   }
 }
 

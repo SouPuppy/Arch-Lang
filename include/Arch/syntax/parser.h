@@ -3,7 +3,9 @@
 #include "arch/syntax/token.h"
 #include "arch/core/context.h"
 #include "arch/core/term.h"
+#include "arch/syntax/ast.h"
 
+#include <cstddef>
 #include <memory>
 #include <string>
 #include <vector>
@@ -77,7 +79,10 @@ struct Parser {
   Result parse_all();
 
   /* expect to parse a term that exact stops at the end of the line */
-  std::optional<std::shared_ptr<Arch::HoTT::Term>> parse_term();
+  inline Ptr<Term> parse_Term() { return nullptr;}
+  inline Ptr<ConstString> parse_ConstString() {return nullptr; }
+  inline Ptr<ConstReal> parse_ConstReal() { return nullptr; }
+  inline Ptr<Decl> parse_Decl() { return std::make_unique<Decl>(); }
 };
 
 /* parsing source code */

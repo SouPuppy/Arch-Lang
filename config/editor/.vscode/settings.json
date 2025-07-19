@@ -16,5 +16,5 @@
     ".git/": true,
   },
   // CMake
-  "cmake.useCMakePresets": "always"
+  "cmake.useCMakePresets": "never",
 }
