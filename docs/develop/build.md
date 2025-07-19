@@ -61,4 +61,8 @@ $env:Path = "$PWD\.arch\bin;$env:Path"
 
 You can also use the CMake Tools panel run more commands.
 
+## Develop VS Code Extension
+
+Press `f5` to launch the VS Code extension project under `./syntax/arch-vscode`
+
 [CMake Tools]: https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools

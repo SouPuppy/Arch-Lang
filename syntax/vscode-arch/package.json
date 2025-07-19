@@ -1,0 +1,27 @@
+{
+  "name": "vscode-arch",
+  "displayName": "Arch",
+  "description": "Arch language support for VS Code",
+  "publisher": "Arch",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.102.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "arch",
+      "aliases": ["Arch", "arch"],
+      "extensions": [".arc"],
+      "filenames": ["Archfile"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "arch",
+      "scopeName": "source.arch",
+      "path": "./syntaxes/arch.tmLanguage.json"
+    }]
+  }
+}

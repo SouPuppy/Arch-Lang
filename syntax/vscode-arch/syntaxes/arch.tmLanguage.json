@@ -1,0 +1,111 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Arch",
+  "scopeName": "source.arch",
+  "patterns": [
+    { "include": "#keywords" },
+    { "include": "#strings" },
+    { "include": "#type-annotations" },
+    { "include": "#import-paths" }
+  ],
+  "repository": {
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.arch",
+          "match": "\\b(namespace|import|using)\\b"
+        },
+        {
+          "name": "keyword.other.def.arch",
+          "match": "\\b(def|export)\\b"
+        },
+        {
+          "name": "keyword.operator.assignment.arch",
+          "match": ":=|:"
+        },
+        {
+          "name": "keyword.operator.arch",
+          "match": "\\+|\\-|\\*|=|<|>"
+        },
+        {
+          "name": "keyword.operator.logical.arch",
+          "match": "×|≡"
+        },
+        {
+          "name": "punctuation.definition.arch",
+          "match": "#"
+        },
+        {
+          "name": "constant.language.universe.arch",
+          "match": "𝒰"
+        },
+        {
+          "name": "storage.type.constructor.arch",
+          "match": "λ|Π|Σ"
+        },
+        {
+          "name": "storage.type.arch",
+          "match": "\\bstruct\\b"
+        },
+        {
+          "name": "storage.type.arch",
+          "match": "\\bString\\b"
+        }
+      ]
+    },
+    "strings": {
+      "name": "string.quoted.double.arch",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.arch",
+          "match": "\\\\."
+        }
+      ]
+    },
+    "type-annotations": {
+      "patterns": [
+        {
+          "begin": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\b(?=\\s*:\\s*\\b[a-zA-Z_][a-zA-Z0-9_]*\\b)",
+          "beginCaptures": {
+            "1": {
+              "name": "variable.other.arch"
+            }
+          },
+          "end": "(?=\\s*:\\s*\\b[a-zA-Z_][a-zA-Z0-9_]*\\b)",
+          "patterns": []
+        },
+        {
+          "begin": ":\\s*\\b([a-zA-Z_][a-zA-Z0-9_]*)\\b",
+          "beginCaptures": {
+            "1": {
+              "name": "storage.type.arch"
+            }
+          },
+          "end": "(?=\\s|$)",
+          "patterns": []
+        }
+      ]
+    },
+    "import-paths": {
+      "patterns": [
+        {
+          "begin": "\\b(namespace|import|using)\\b\\s+",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.control.arch"
+            }
+          },
+          "end": "(?=\\s|$|;)",
+          "patterns": [
+            {
+              "name": "support.module.arch",
+              "match": "[@]?[a-zA-Z0-9_\\-/\\.]+"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

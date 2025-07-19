@@ -1,7 +1,7 @@
-namespace @std/project;
+namespace @std/project
 
 export def ARCH_PROJECT: struct {
-  def name: string
-  def version: string
-  def description: string
+  def name: String
+  def version: String
+  def description: String
 }

@@ -50,9 +50,12 @@ Read the [Installation] section from the [Documentation]
 
 The Arch source code is organized as follows:
 
-| Directory | Contents                      |
-|-----------|-------------------------------|
-| `src/`    | source for Arch language core |
+| Directory            | Contents                          |
+| -------------------- | --------------------------------- |
+| `.arch/`             | Project's metadata                |
+| `src/`               | source for Arch language core     |
+| `modules/`           | Arch modules                      |
+| `syntax/arch-vscode` | Arch language support for VS Code |
 
 [Building Arch]: https://soupup.online/Installation
 

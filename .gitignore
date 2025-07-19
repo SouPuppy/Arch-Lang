@@ -6,8 +6,9 @@
 .cache
 
 # Visual Studio Code
-.vscode
+.vscode/
 !config/editor/.vscode/
+!vscode-extension/vscode-arch/.vscode/
 
 # IntelliJ
 .idea
@@ -18,3 +19,6 @@ cmake-build-*
 
 # System Files
 .DS_Store
+
+# vscode-extension
+*.vsix
