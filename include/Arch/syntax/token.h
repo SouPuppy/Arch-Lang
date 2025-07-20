@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include <utility>
-#include "arch/syntax/span.h"
+#include "arch/syntax/codemap.h"
 #include "arch/util/string_utils.h"
 
 namespace Arch::Syntax {
@@ -20,6 +20,8 @@ enum class TokenKind: uint8_t {
   INTEGER,            // [0-9][0-9]*
   REAL,               // [0-9][0-9]*.[0-9]*
 
+  STRING,             // "*" in a single line
+
   /* Meta Instructions */
   INSTR_TYPE,         // #type
   INSTR_INFO,         // #info
@@ -32,7 +34,7 @@ enum class TokenKind: uint8_t {
   KEYWORD_DEF,        // def
   KEYWORD_USING,      // using
   KEYWORD_IMPORT,     // import
-  KEYWORD_NAMESPACE,  // namesapce
+  KEYWORD_NAMESPACE,  // namespace
   KEYWORD_EXPORT,     // export
 
   KEYWORD_PLUS_TERM,  // (+)
@@ -75,6 +77,8 @@ inline std::string to_string(const TokenKind kind) {
     /* Numbers */
     case TokenKind::INTEGER:            return "INTEGER";
     case TokenKind::REAL:               return "REAL";
+
+    case TokenKind::STRING:             return "STRING";
 
     /* Meta Instructions */
     case TokenKind::INSTR_TYPE:         return "INSTR_TYPE";

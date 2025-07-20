@@ -52,7 +52,9 @@ struct BinaryInfixTerm {
 struct TermString {};
 struct TermReal {};
 struct ConstTerm { Ptr<Const> value; };
-
+struct BaseTerm {
+  enum class Kind { Real, String} kind;
+};
 using TermNode = std::variant<
   ApplyTerm,
   AnnotatedTerm,
@@ -60,7 +62,8 @@ using TermNode = std::variant<
   BinaryInfixTerm,
   TermString,
   TermReal,
-  ConstTerm
+  ConstTerm,
+  BaseTerm
 >;
 struct Term {
   TermNode node;

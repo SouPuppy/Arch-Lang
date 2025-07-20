@@ -8,6 +8,8 @@ DecL ::=  KEYWORD_DEFINE identifier ':' type
 term ::=  (term)
       |   term term
       |   identifier ':' type
+      |   builtinTerm
+      |   constTerm
 
 type ::= (type)
       |  term

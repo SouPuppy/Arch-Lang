@@ -17,9 +17,9 @@ inline void cmd_init_project(int argc, const char *argv[]) {
   std::string project_path = ".";
   if (argc != 0) project_path = argv[0];
 
-  /* check if the exists */
+  /* check if exists */
   if (!std::filesystem::exists(project_path)) {
-    std::cerr << "Invalid directory to initilize an `arch` project\n";
+    std::cerr << "Invalid directory to initialize an `arch` project\n";
     exit(1);
   }
   std::filesystem::path dot_arch_path = std::filesystem::path(project_path) / ".arch";

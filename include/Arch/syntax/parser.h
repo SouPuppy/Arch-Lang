@@ -62,6 +62,11 @@ struct Parser {
       stack.pop_back();
     }
   }
+  void pop() {
+    if (!stack.empty()) {
+      pos = stack.back();
+    }
+  }
 
   [[nodiscard]] Token previous() const {
     return tokens[pos - 1];
@@ -78,11 +83,39 @@ struct Parser {
   /* Recursive Descent Parsing */
   Result parse_all();
 
-  /* expect to parse a term that exact stops at the end of the line */
-  inline Ptr<Term> parse_Term() { return nullptr;}
-  inline Ptr<ConstString> parse_ConstString() {return nullptr; }
-  inline Ptr<ConstReal> parse_ConstReal() { return nullptr; }
-  inline Ptr<Decl> parse_Decl() { return std::make_unique<Decl>(); }
+  /* Const */
+  Ptr<Const> parse_Const();
+  Ptr<ConstString> parse_ConstString();
+  Ptr<ConstReal> parse_ConstReal();
+
+  /* Term */
+  Ptr<Term> parse_Term();
+  Ptr<ApplyTerm> parse_ApplyTerm();
+  Ptr<AnnotatedTerm> parse_AnnotatedTerm();
+  Ptr<BinaryPrefixTerm> parse_BinaryPrefixTerm();
+  Ptr<BinaryInfixTerm> parse_BinaryInfixTerm();
+  Ptr<TermString> parse_TermString();
+  Ptr<TermReal> parse_TermReal();
+  Ptr<BaseTerm> parse_BaseTerm();
+  Ptr<ConstTerm> parse_ConstTerm();
+
+  /* Type */
+  Ptr<Type> parse_Type();
+
+  /* Decl */
+  Ptr<Decl> parse_Decl();
+  Ptr<DefDecl> parse_DefDecl();
+  Ptr<AssignDecl> parse_AssignDecl();
+  Ptr<FullDecl> parse_FullDecl();
+
+  /* Instruction */
+  Ptr<Instruction> parse_Instruction();
+
+  /* Top Level Item */
+  Ptr<TopLevelItem> parse_TopLevelItem();
+
+  /* Identifier */
+  Ptr<Identifier> parse_Identifier();
 };
 
 /* parsing source code */

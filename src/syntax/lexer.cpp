@@ -175,10 +175,32 @@ Token Scanner::nextToken() {
   /* scanner meets end */
   if (isAtEnd()) return Token(TokenKind::END_OF_FILE, "\\0", Span(lineinfo_start));
 
+  /* string */
+  if (peek() == U'\"') {
+    advance();
+    BytePos last_pos = getLineInfo();
+    std::u32string str = U"";
+    int str_len = 0;
+    while (true) {
+      const char32_t c = peek();
+      /* normal ending for a string */
+      if (c == U'\"') {
+        advance();
+        return Token(TokenKind::STRING, str, Span(lineinfo_start, getLineInfo()));
+      }
+      /* this is not good, someone missed a double quote */
+      if (c == U'\n') {
+        return Token(TokenKind::STRING, str, Span(lineinfo_start, getLineInfo()));
+      }
+      str += c;
+      advance();
+    }
+  }
+
   /* Meta Instruction */
   if (newLine() == true) {
     // Meta Instructions should be the first token of a new line
-    if (match(U"#type")) return Token(TokenKind::INSTR_TYPE              , U"#type", Span(lineinfo_start, getLineInfo()));
+    if (match(U"#type")) return Token(TokenKind::INSTR_TYPE                   , U"#type", Span(lineinfo_start, getLineInfo()));
     if (match(U"#info")) return Token(TokenKind::INSTR_INFO              , U"#info", Span(lineinfo_start, getLineInfo()));
     if (match(U"#eval")) return Token(TokenKind::INSTR_EVAL              , U"#eval", Span(lineinfo_start, getLineInfo()));
   }  
@@ -217,7 +239,7 @@ Token Scanner::nextToken() {
     case U'<':  advance(); return Token(TokenKind::LESS_THAN             , U"<",  Span(lineinfo_start));
     case U'>':  advance(); return Token(TokenKind::GREATER_THAN          , U">",  Span(lineinfo_start));
     case U'.':  advance(); return Token(TokenKind::DOT                   , U".",  Span(lineinfo_start));
-    case U'\"': advance(); return Token(TokenKind::DOUBLE_QUOTE          , U"\"", Span(lineinfo_start));
+    // case U'\"': advance(); return Token(TokenKind::DOUBLE_QUOTE          , U"\"", Span(lineinfo_start));
     case U'@':  advance(); return Token(TokenKind::AT                    , U"@",  Span(lineinfo_start));
     case U'_':  advance(); return Token(TokenKind::UNDERSCORE            , U"_",  Span(lineinfo_start));
     case U'|':  advance(); return Token(TokenKind::BAR                   , U"|",  Span(lineinfo_start));
