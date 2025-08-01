@@ -10,8 +10,8 @@
 
 This is the main source code repository for [Arch].
 
-[Arch]: https://soupup.online/
-[Documentation]: https://soupup.online/
+[Arch]: https://arch-lang.site/
+[Documentation]: https://arch-lang.site/
 [Contributing]: CONTRIBUTING.md
 
 ## Theory
@@ -37,7 +37,7 @@ git checkout theory/<theory-name>
 
 Read the [Installation] section from the [Documentation]
 
-[Installation]: https://soupup.online/Installation
+[Installation]: https://arch-lang.site
 
 ## References
 
