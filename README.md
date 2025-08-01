@@ -14,24 +14,17 @@ This is the main source code repository for [Arch].
 [Documentation]: https://arch-lang.site/
 [Contributing]: CONTRIBUTING.md
 
-## Theory
+## Arch Language Architecture
 
-Arch explores multiple theories of types and computation. Each theoretical system is implemented in a **dedicated Git branch**. You can switch between them to explore different semantics, syntax, and evaluation strategies.
+The Arch programming language is organized into the following core components:
 
-| Branch            | Description                           | Status       |
-|-------------------|---------------------------------------|--------------|
-| `theory/dev`      | Experimental branch for prototyping   | in progress  |
-| `theory/utlc`     | Untyped Lambda Calculus               | in progress  |
-| `theory/stlc`     | Simple Typed Lambda Calculus          | in progress  |
-| `theory/systemf`  | System F (second-order polymorphic λ) | in progress  |
-| `theory/mltt`     | Martin-Löf Type Theory                | in progress  |
-| `theory/hott`     | Homotopy Type Theory                  | in progress  |
+- **`arch-lang`** &mdash; The core compiler and runtime of the Arch language.
 
-To try out a particular theory, check out the corresponding branch:
+- **`arch-lib`** &mdash; The official standard library providing built-in modules and utilities.
 
-```bash
-git checkout theory/<theory-name>
-```
+- **`arch-docs`** &mdash; - Builds and hosts the official Arch documentation website, including both the site framework and the documentation content.
+
+- **`arch`** &mdash; The official module repository for distributing and sharing Arch packages.
 
 ## Installation
 
