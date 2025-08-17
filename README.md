@@ -1,41 +1,8 @@
-<div align="center">
-  <picture>
-    <img alt="Arch Programming Language: A language that's all about type"
-         src="https://raw.githubusercontent.com/SouPuppy/Arch-Docs/refs/heads/master/static/images/logo.svg"
-         width="50%">
-  </picture>
+## sbt project compiled with Scala 3
 
-[Website][Arch] | [Documentation] | [Contributing]
-</div>
+### Usage
 
-This is the main source code repository for [Arch].
+This is a normal sbt project. You can compile code with `sbt compile`, run it with `sbt run`, and `sbt console` will start a Scala 3 REPL.
 
-[Arch]: https://soupup.online/
-[Documentation]: https://soupup.online/
-[Contributing]: CONTRIBUTING.md
-
-## Installation
-
-Read the [Installation] section from the [Documentation]
-
-[Installation]: https://soupup.online/Installation
-
-## References
-
-**Type Theory**
-
-- [HoTT Book]
-
-[HoTT Book]: https://homotopytypetheory.org/book/
-
-## Source Code
-
-The Arch source code is organized as follows:
-
-| Directory | Contents                      |
-|-----------|-------------------------------|
-| `src/`    | source for Arch language core |
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+For more information on the sbt-dotty plugin, see the
+[scala3-example-project](https://github.com/scala/scala3-example-project/blob/main/README.md).
